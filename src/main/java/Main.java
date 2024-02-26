@@ -1,4 +1,8 @@
+import input.Input;
+import org.lwjgl.opengl.GL;
+
 import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 public class Main implements Runnable {
@@ -50,15 +54,25 @@ public class Main implements Runnable {
             return;
         }
 
+        glfwSetKeyCallback(window, new Input());
+
         glfwMakeContextCurrent(window);
         glfwShowWindow(window);
+        GL.createCapabilities();
+
+        glClearColor(0.0f, 1.0f, 1.0f, 1.0f);
+        glEnable(GL_DEPTH_TEST);
     }
 
     private void update() {
         glfwPollEvents();
+        if(Input.keys[GLFW_KEY_SPACE]) {
+            System.out.printf("FLAP");
+        }
     }
 
     private void render() {
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glfwSwapBuffers(window);
     }
 
