@@ -1,5 +1,7 @@
+import graphics.Shader;
 import input.Input;
 import org.lwjgl.opengl.GL;
+import utils.math.Matrix4f;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
@@ -62,6 +64,12 @@ public class Main implements Runnable {
 
         glClearColor(0.0f, 1.0f, 1.0f, 1.0f);
         glEnable(GL_DEPTH_TEST);
+
+        Shader.loadAll();
+
+        Matrix4f pr_matrix = Matrix4f.orthographic(-10.0f, 10.0f, -10.0f * 9.0f / 16.0f, 10.0f * 9.0f / 16.0f, -1.0f, 1.0f);
+
+        Shader.BG.setUniformMat4f("pr_matrix", pr_matrix);
     }
 
     private void update() {

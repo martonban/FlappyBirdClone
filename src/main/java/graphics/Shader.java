@@ -13,6 +13,11 @@ import static org.lwjgl.opengl.GL20.*;
 *   This is a representation class
 */
 public class Shader {
+    public static final int VERTEX_ATTRIB = 0;
+    public static final int TEXTCOORD_ATTRIB = 1;
+
+    public static Shader BG;
+
     private final int ID;
     private Map<String, Integer> locationCache = new HashMap<String, Integer>();
 
@@ -20,6 +25,9 @@ public class Shader {
         ID = ShaderUtils.load(vertex, fragment);
     }
 
+    public static void loadAll() {
+        BG = new Shader("shaders/bg.vert", "shaders/bg.frag");
+    }
 
     public int getUniform(String name) {
         if(locationCache.containsKey(name))
