@@ -1,5 +1,6 @@
 import graphics.Shader;
 import input.Input;
+import level.Level;
 import org.lwjgl.opengl.GL;
 import utils.math.Matrix4f;
 
@@ -16,6 +17,8 @@ public class Main implements Runnable {
     private boolean running = false;
 
     private long window;
+
+    private Level level;
 
     public void start() {
         running = true;
@@ -67,9 +70,13 @@ public class Main implements Runnable {
 
         Shader.loadAll();
 
+        Shader.BG.enable();
         Matrix4f pr_matrix = Matrix4f.orthographic(-10.0f, 10.0f, -10.0f * 9.0f / 16.0f, 10.0f * 9.0f / 16.0f, -1.0f, 1.0f);
 
         Shader.BG.setUniformMat4f("pr_matrix", pr_matrix);
+
+        Shader.BG.disable();
+        level = new Level();
     }
 
     private void update() {
@@ -81,6 +88,7 @@ public class Main implements Runnable {
 
     private void render() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+        level.render();
         glfwSwapBuffers(window);
     }
 
